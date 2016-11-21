@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var express = require('express');
+var pug = require('pug');
 
 var app = express();
 
