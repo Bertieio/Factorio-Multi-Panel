@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Bertieio/Factorio-Multi-Panel/issues"
   },
-  "homepage": "https://github.com/Bertieio/Factorio-Multi-Panel#readme"
+  "homepage": "https://github.com/Bertieio/Factorio-Multi-Panel#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
