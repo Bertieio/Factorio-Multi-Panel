@@ -23,8 +23,11 @@
   "homepage": "https://github.com/Bertieio/Factorio-Multi-Panel#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "filehound": "^1.12.2",
     "morgan": "^1.7.0",
+    "prompt": "^1.0.0",
     "pug": "^2.0.0-beta6",
-    "purecss": "^0.6.0"
+    "purecss": "^0.6.0",
+    "sqlite3": "^3.1.8"
   }
 }

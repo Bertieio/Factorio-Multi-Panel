@@ -41,3 +41,4 @@ static/pure.css
 
 #sqlite databases
 *.sqlite
+*.db
