@@ -7,7 +7,6 @@
     "test": "./",
     "start": "node server.js",
     "postinstall": "ln -sf ../node_modules/purecss/build/pure.css static/"
-    
   },
   "repository": {
     "type": "git",
@@ -24,6 +23,7 @@
   "homepage": "https://github.com/Bertieio/Factorio-Multi-Panel#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "morgan": "^1.7.0",
     "pug": "^2.0.0-beta6",
     "purecss": "^0.6.0"
   }
