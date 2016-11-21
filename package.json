@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "./",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "ln -sf ../node_modules/purecss/build/pure.css static/"
+    
   },
   "repository": {
     "type": "git",
