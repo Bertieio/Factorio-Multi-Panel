@@ -1,7 +1,20 @@
 {
-	"name": "factorio-multi-panel"
-	"version": "0.0.0"
-	"desctiption": "A Factorio control panel designed to make administrating multiple servers easy"
-	
+  "name": "factorio-multi-panel",
+  "version": "0.0.1",
+  "description": "Web client to manage multiple Factorio Servers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bertieio/Factorio-Multi-Panel.git"
+  },
+  "main": "server.js",
+  "bin": {
+    "factorio-multi-panel": "server.js"
+  },
+  "scripts": {
+  },
+  "author": "Bertie Scott <b@bertie.io>",
+  "license": "MIT",
+  "dependencies": {
+    "pug": "^2.0.0-alpha7",
+  }
 }
-
