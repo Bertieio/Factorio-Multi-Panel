@@ -4,6 +4,7 @@ html
     title= title
     link(rel='stylesheet' href='static/pure.css')
     link(rel='stylesheet' href='static/main.css')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
     script(src="static/script.js")
 body
     div(class="layout")
@@ -17,7 +18,8 @@ body
                     ul(class="pure-menu-list")
                         li(class="pure-menu-item")
                             a(class="pure-menu-link" onclick="confim()" href="#") Add new server
-                                span(style="float:right; margin-right:10px") +
+                                span(style="float:right; margin-right:10px")
+                                  i(class="material-icons" style="font-size:100%;") add
                 div(class="pure-menu pure-menu-scrollable custom-restricted")
                     ul(class="pure-menu-list" style="background-color: rgb(100, 100, 100);")
                         li(class="pure-menu-item")
@@ -33,3 +35,6 @@ body
                         li(class="pure-menu-item")
                             a(class="pure-menu-link" href="#") Item 6
     div(id="sysInfo" class="sysInfo")
+      span(id="info")
+      a(href="#" onclick="hide()")
+        i(class="material-icons" style="float:right;margin-right: 15px;") clear

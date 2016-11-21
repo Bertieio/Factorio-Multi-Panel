@@ -5,7 +5,13 @@ var pug = require('pug');
 var morgan = require('morgan');
 var sqlite = require('sqlite3');
 var prompt = require('prompt');
+var wget = require('wget-improved');
+var tar = require('tarball-extract');
 
+var factorio = {}
+factorio.vers = "0.14.20";
+factorio.dl = "https://www.factorio.com/get-download/" + factorio.vers + "/headless/linux64"
+factorio.file = "headless.tar.gz"
 var error = {};
 
 var paths = {};
@@ -99,20 +105,26 @@ admin.get('/addServer', function(req, res) {
         } else {
             i = rows.serverID + 1;
         }
-        var dir = paths.factorioDir + "server" + i;
-        //	var q = db.prepare("INSERT INTO Server (serverID, ServerDir) VALUES (?,?)");
-        //q.run([i, dir]);
-        //q.finalize();
+        var dir = paths.factorioDir + "server" + i + "/";
+        var q = db.prepare("INSERT INTO Servers (serverID, ServerDir) VALUES (?,?)");
+        q.run([i, dir]);
+        q.finalize();
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
+            var out = dir + factorio.file;
+            var down = wget.download(factorio.dl, out)
+            var ee;
+            down.on('error', function(err) {
+                console.log(err);
+            });
             error.level = "sucess";
-            error.details = "Created Server " + (i + 1) + "in " + dir + "!";
-						res.send(error.level + ":" + error.details);
+            error.details = "Created Server " + (i) + " in " + dir + "!-";
+            res.send(error.level + ":" + error.details);
         } else {
             console.log("Directory " + dir + " Exists");
             error.level = "warn";
             error.details = "Directory " + dir + " Exists";
-						res.send(error.level + ":" + error.details);
+            res.send(error.level + ":" + error.details);
 
         }
     });

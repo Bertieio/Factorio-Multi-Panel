@@ -2,12 +2,17 @@ function confim() {
     if (confirm("Create New Server?") == true) {
         startServer();
     }
+}
 
+function hide() {
+  infoBox = document.getElementById('sysInfo');
+  infoBox.className = "sysInfo"
 }
 
 function startServer(){
   console.log("Bang!");
   infoBox = document.getElementById('sysInfo');
+  info = document.getElementById('info');
   var xhr = new XMLHttpRequest();
   xhr.open("Get", "addServer");
   xhr.onload = function (e) {
@@ -18,8 +23,11 @@ function startServer(){
               console.log(result);
               var formedResult = result.split(":");
               if(formedResult[0] == "warn"){
-                  infoBox.innerHTML = formedResult[1];
+                  info.innerHTML = formedResult[1];
                   infoBox.className = "sysWarn";
+                }else if (formedResult[0] == "sucess") {
+                  info.innerHTML = formedResult[1];
+                  infoBox.className = "sysSucess";
                 }
         }
       }else {

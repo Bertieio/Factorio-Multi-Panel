@@ -24,10 +24,13 @@
   "dependencies": {
     "express": "^4.14.0",
     "filehound": "^1.12.2",
+    "material-design-icons": "^3.0.1",
     "morgan": "^1.7.0",
     "prompt": "^1.0.0",
     "pug": "^2.0.0-beta6",
     "purecss": "^0.6.0",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.8",
+    "tarball-extract": "0.0.3",
+    "wget-improved": "^1.4.0"
   }
 }

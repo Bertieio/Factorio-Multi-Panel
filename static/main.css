@@ -12,12 +12,27 @@
 }
 
 .sysError{
+  display: block;
   background-color: rgb(230, 31, 31);
 }
 
 .sysWarn{
     display: block;
     background-color: rgb(240, 116, 14);
+}
+
+.sysSucess{
+    display: block;
+    background-color: rgb(36, 138, 30);
+}
+
+.info{
+  text-align: center;
+}
+
+#hide{
+  text-align: right;
+  background: rgba(167, 167, 167, 0.87)
 }
 
 .custom-restricted {
