@@ -19,7 +19,7 @@ factorio.file = "headless.tar.gz"
 var error = {};
 
 var paths = {};
-paths.factorioDir = "/home/bertie/games/factorioServers/";
+paths.factorioDir = "/home/b/games/factorioServers/";
 paths.workingDir = process.cwd();
 
 var fs = require("fs");
@@ -43,14 +43,16 @@ function createUser(db, details) {
     db.get("SELECT * FROM User WHERE userID = (SELECT MAX(userID) FROM User);", function(err, rows) {
         if (rows === undefined) {
             i = 0;
+            var q = db.prepare("INSERT INTO User (userID, userName, userPassword, userEmail) VALUES (?,?,?,?)");
+            q.run([i, details.username, details.password, details.email]);
+            q.finalize();
         } else {
             i = rows.userID + 1;
+            var q = db.prepare("INSERT INTO User (userID, userName, userPassword, userEmail) VALUES (?,?,?,?)");
+            q.run([i, details.username, details.password, details.email]);
+            q.finalize();
         }
     });
-
-    var q = db.prepare("INSERT INTO User (userID, userName, userPassword, userEmail) VALUES (?,?,?,?)");
-    q.run([i, details.username, details.password, details.password]);
-    q.finalize();
 
 }
 
@@ -121,8 +123,11 @@ admin.get('/addServer', function(req, res) {
             down.on('error', function(err) {
                 console.log(err);
             });
+            tarball.extractTarball(out, dir, function(err) {
+                if (err) console.log(err)
+            })
             error.level = "sucess";
-            error.details = "Created Server " + (i) + " in " + dir + "!-";
+            error.details = "Created Server " + (i) + " in " + dir + "!";
             res.send(error.level + ":" + error.details);
         } else {
             console.log("Directory " + dir + " Exists");
