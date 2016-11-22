@@ -123,9 +123,12 @@ admin.get('/addServer', function(req, res) {
             down.on('error', function(err) {
                 console.log(err);
             });
-            tarball.extractTarball(out, dir, function(err) {
+            down.on('end', function(output) {
+              console.log(output);
+            tar.extractTarball(out, dir, function(err) {
                 if (err) console.log(err)
             })
+          })
             error.level = "sucess";
             error.details = "Created Server " + (i) + " in " + dir + "!";
             res.send(error.level + ":" + error.details);
