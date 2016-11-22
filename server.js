@@ -8,6 +8,10 @@ var prompt = require('prompt');
 var wget = require('wget-improved');
 var tar = require('tarball-extract');
 
+var opts = {}
+opts.port = 3000;
+
+
 var factorio = {}
 factorio.vers = "0.14.20";
 factorio.dl = "https://www.factorio.com/get-download/" + factorio.vers + "/headless/linux64"
@@ -29,8 +33,8 @@ var db = new sqlite.Database(file);
 
 
 function run() {
-    app.listen(3000, function() {
-        console.log('Factorio Multi Panel listening on port 3000!');
+    app.listen(opts.port, function() {
+        console.log('Factorio Multi Panel listening on port ' + opts.port + '!');
     });
 }
 
