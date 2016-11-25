@@ -6,6 +6,7 @@ A Factorio control panel designed to make administrating multiple servers easy
 - [ ] load servers to ui selection list on side bar
 - [ ] load server details to ui on click of side bar
 - [ ] load server config
+- [ ] Setup user account system and encrypt user passwords
 - [ ] create and load maps per server 
 - [ ] start servers
 - [ ] add mods 
