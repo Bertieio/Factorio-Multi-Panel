@@ -100,28 +100,33 @@ app.use('/', admin);
 
 function listServers() {
   var k = 0;
-  var list;
+  var list=[];
   db.each("SELECT * FROM Servers;", function(err, rows){
     var confi = fs.readFileSync(paths.factorioDir + "server" + rows.serverID + paths.conf);
     var conf = JSON.parse(confi);
-    //console.log(conf);
+    //console.log(rows);
     var item = {id: rows.serverID, conf:conf};
-    list[k] = item;
+    list.push(item);
     console.log(item.conf.name);
     console.log("------");
     console.log(list[k].id);
     k++;
   });
-  if(list === undefined){
-    list = {id: -1};
-  }
-  return list;
+ // if(list === undefined){
+   // var y = 
+    //list[0] = y;
+    //console.log(list)
+ // }
+  return list||[{id: -1}];
 }
 
 admin.get('/', function(req, res) {
-    listServers();
+    var servers = listServers();
     adminTemplate = pug.compileFile(__dirname + '/template.pug');
-    html = adminTemplate();
+    context = {
+      servers: servers
+    };
+  html = adminTemplate(context);
     res.send(html);
 });
 
@@ -135,8 +140,6 @@ admin.get('/addServer', function(req, res) {
         }
         var dir = paths.factorioDir + "server" + i + "/";
         var q = db.prepare("INSERT INTO Servers (serverID, ServerDir) VALUES (?,?)");
-        q.run([i, dir]);
-        q.finalize();
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
             var out = dir + factorio.file;
@@ -147,8 +150,13 @@ admin.get('/addServer', function(req, res) {
             });
             down.on('end', function(output) {
               console.log(output);
-            tar.extractTarball(out, dir, function(err) {
+              tar.extractTarball(out, dir, function(err) {
                 if (err) console.log(err);
+                //if (!err){ 
+                    q.run([i, dir]);
+                    q.finalize();
+                        // }
+       
             });
           });
             error.level = "sucess";
