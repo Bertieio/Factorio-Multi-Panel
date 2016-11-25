@@ -99,13 +99,18 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/', admin);
 
 function listServers() {
-  var list = new array();
+  var k = 0;
+  var list;
   db.each("SELECT * FROM Servers;", function(err, rows){
     var confi = fs.readFileSync(paths.factorioDir + "server" + rows.serverID + paths.conf);
     var conf = JSON.parse(confi);
-    
-    list.push({id: rows.serverID});
-    console.log(list[0]);
+    //console.log(conf);
+    var item = {id: rows.serverID, conf:conf};
+    list[k] = item;
+    console.log(item.conf.name);
+    console.log("------");
+    console.log(list[k].id);
+    k++;
   });
   if(list === undefined){
     list = {id: -1};
