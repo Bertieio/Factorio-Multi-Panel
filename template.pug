@@ -19,22 +19,17 @@ body
                         li(class="pure-menu-item")
                             a(class="pure-menu-link" onclick="confim()" href="#") Add new server
                                 span(style="float:right; margin-right:10px")
-                                  i(class="material-icons" style="font-size:100%;") add
-                div(class="pure-menu pure-menu-scrollable custom-restricted")
-                    ul(class="pure-menu-list" style="background-color: rgb(100, 100, 100);")
+                                    i(class="material-icons" style="font-size:100%;") add
+            div(class="pure-menu pure-menu-scrollable custom-restricted")
+                ul(class="pure-menu-list" style="background-color: rgb(100, 100, 100);")
+                    - if (servers.length == 0)
                         li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 1
-                        li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 2
-                        li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 3
-                        li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 4
-                        li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 5
-                        li(class="pure-menu-item")
-                            a(class="pure-menu-link" href="#") Item 6
-    div(id="sysInfo" class="sysInfo")
-      span(id="info")
-      a(href="#" onclick="hide()")
-        i(class="material-icons" style="float:right;margin-right: 15px;") clear
+                            a(class="pure-menu-link" href="#") No servers found.
+                    - else
+                       each server in servers
+                           li(class="pure-menu-item")
+                               a(class="pure-menu-link" href="#") server.conf.name
+            div(id="sysInfo" class="sysInfo")
+                span(id="info")
+                    a(href="#" onclick="hide()")
+                        i(class="material-icons" style="float:right;margin-right: 15px;") clear

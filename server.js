@@ -9,9 +9,11 @@ var wget = require('wget-improved');
 var tar = require('tarball-extract');
 var fs = require("fs");
 
+
 var opts = {};
 opts.port = 3000;
 
+var listServersComplete = false;
 
 var factorio = {};
 factorio.vers = "0.14.20";
@@ -99,6 +101,7 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/', admin);
 
 function listServers() {
+  listServersComplete = false;
   var k = 0;
   var list=[];
   db.each("SELECT * FROM Servers;", function(err, rows){
@@ -110,6 +113,7 @@ function listServers() {
     console.log(item.conf.name);
     console.log("------");
     console.log(list[k].id);
+    console.log("lengh: " + list.length);
     k++;
   });
  // if(list === undefined){
@@ -117,18 +121,20 @@ function listServers() {
     //list[0] = y;
     //console.log(list)
  // }
-  return list||[{id: -1}];
+listServersComplete = true;
+  return list;
 }
 
 admin.get('/', function(req, res) {
-    var servers = listServers();
+   servers = listServers()
+    console.log("server l:" + servers.length)
     adminTemplate = pug.compileFile(__dirname + '/template.pug');
     context = {
       servers: servers
     };
   html = adminTemplate(context);
     res.send(html);
-});
+})
 
 admin.get('/addServer', function(req, res) {
     var i = 0;
