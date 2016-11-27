@@ -13,8 +13,6 @@ var fs = require("fs");
 var opts = {};
 opts.port = 3000;
 
-var listServersComplete = false;
-
 var factorio = {};
 factorio.vers = "0.14.20";
 factorio.dl = "https://www.factorio.com/get-download/" + factorio.vers + "/headless/linux64";
@@ -100,41 +98,31 @@ app.use(morgan('common'));
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/', admin);
 
-function listServers() {
-  listServersComplete = false;
-  var k = 0;
-  var list=[];
-  db.each("SELECT * FROM Servers;", function(err, rows){
-    var confi = fs.readFileSync(paths.factorioDir + "server" + rows.serverID + paths.conf);
-    var conf = JSON.parse(confi);
-    //console.log(rows);
-    var item = {id: rows.serverID, conf:conf};
-    list.push(item);
-    console.log(item.conf.name);
-    console.log("------");
-    console.log(list[k].id);
-    console.log("lengh: " + list.length);
-    k++;
-  });
- // if(list === undefined){
-   // var y = 
-    //list[0] = y;
-    //console.log(list)
- // }
-listServersComplete = true;
-  return list;
-}
 
 admin.get('/', function(req, res) {
-   servers = listServers()
-    console.log("server l:" + servers.length)
-    adminTemplate = pug.compileFile(__dirname + '/template.pug');
-    context = {
-      servers: servers
-    };
-  html = adminTemplate(context);
-    res.send(html);
-})
+   listServers().then((servers) => {
+     console.log("/ servers length"+ servers.length);
+      const adminTemplate = pug.compileFile(__dirname + '/template.pug');
+      const context = { servers: servers };
+      const html = adminTemplate(context);
+      res.send(html);
+   });
+});
+
+function listServers() {
+  return new Promise((resolve, reject) => {
+    const list=[];
+    db.each("SELECT * FROM Servers;", function(err, rows){
+      const confi = fs.readFileSync(paths.factorioDir + "server" + rows.serverID + paths.conf);
+      const conf = JSON.parse(confi);
+      const item = {id: rows.serverID, conf:conf};
+      list.push(item);
+      console.log("in query list length:" + list.length)
+    });
+    console.log("listServers length:" + list.length)
+    resolve(list);
+  });
+}
 
 admin.get('/addServer', function(req, res) {
     var i = 0;
