@@ -100,29 +100,34 @@ app.use('/', admin);
 
 
 admin.get('/', function(req, res) {
-   listServers().then((servers) => {
+   listServers(function(err, data){
+     console.log(data.length);
+     servers = data;
      console.log("/ servers length"+ servers.length);
-      const adminTemplate = pug.compileFile(__dirname + '/template.pug');
-      const context = { servers: servers };
-      const html = adminTemplate(context);
+      var adminTemplate = pug.compileFile(__dirname + '/template.pug');
+      var context = { servers: servers };
+      var html = adminTemplate(context);
       res.send(html);
-   });
+});
 });
 
-function listServers() {
-  return new Promise((resolve, reject) => {
-    const list=[];
-    db.each("SELECT * FROM Servers;", function(err, rows){
-      const confi = fs.readFileSync(paths.factorioDir + "server" + rows.serverID + paths.conf);
-      const conf = JSON.parse(confi);
-      const item = {id: rows.serverID, conf:conf};
+var listServers = function (err, data) {
+    var list=[];
+    db.all("SELECT * FROM Servers;", function(err, rows){
+    rows.forEach(function(e){
+      var confi = fs.readFileSync(paths.factorioDir + "server" + e.serverID + paths.conf);
+      var conf = JSON.parse(confi);
+      var item = {id: e.serverID, conf:conf};
       list.push(item);
-      console.log("in query list length:" + list.length)
+        console.log("forEach length:" + list.length);
     });
-    console.log("listServers length:" + list.length)
-    resolve(list);
-  });
-}
+    if (err) throw err;
+      console.log("listServers length:" + list.length);
+      data = list;
+    return data;
+    });
+
+};
 
 admin.get('/addServer', function(req, res) {
     var i = 0;
@@ -146,11 +151,11 @@ admin.get('/addServer', function(req, res) {
               console.log(output);
               tar.extractTarball(out, dir, function(err) {
                 if (err) console.log(err);
-                //if (!err){ 
+                //if (!err){
                     q.run([i, dir]);
                     q.finalize();
                         // }
-       
+
             });
           });
             error.level = "sucess";
