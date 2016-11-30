@@ -44,6 +44,4 @@ function startServer(){
 function loadServer(id){
   var content = document.getElementById('content');
   content.src = "server?id="+id;
-  console.log("test");
-  //content.innerHTML =
 }

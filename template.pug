@@ -27,10 +27,10 @@ body
                             a(class="pure-menu-link" href="#") No servers found.
                     - else
                        each server in servers
-                           li(class="pure-menu-item")
+                           li(class="pure-menu-item server")
                                a(class="pure-menu-link" onclick="loadServer("+server.id+")" href="#")= server.conf.name
             div(id="sysInfo" class="sysInfo")
                 span(id="info")
                     a(href="#" onclick="hide()")
                         i(class="material-icons" style="float:right;margin-right: 15px;") clear
-    iframe(class="content" id="content")  
+    iframe(class="content" id="content")
