@@ -99,35 +99,44 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/', admin);
 
 
-admin.get('/', function(req, res) {
-   listServers(function(err, data){
-     console.log(data.length);
-     servers = data;
-     console.log("/ servers length"+ servers.length);
-      var adminTemplate = pug.compileFile(__dirname + '/template.pug');
-      var context = { servers: servers };
-      var html = adminTemplate(context);
-      res.send(html);
-});
-});
 
-var listServers = function (err, data) {
+var listServers = function (callback) {
     var list=[];
     db.all("SELECT * FROM Servers;", function(err, rows){
-    rows.forEach(function(e){
-      var confi = fs.readFileSync(paths.factorioDir + "server" + e.serverID + paths.conf);
-      var conf = JSON.parse(confi);
-      var item = {id: e.serverID, conf:conf};
-      list.push(item);
-        console.log("forEach length:" + list.length);
-    });
-    if (err) throw err;
-      console.log("listServers length:" + list.length);
-      data = list;
-    return data;
-    });
+        if (err) {
+            callback(err, []);
 
+            return;
+        }
+
+        rows.forEach(function(e){
+            var confi = fs.readFileSync(paths.factorioDir + "server" + e.serverID + paths.conf);
+            var conf = JSON.parse(confi);
+            var item = {id: e.serverID, conf:conf};
+            list.push(item);
+            console.log("forEach length:" + list.length);
+        });
+
+        console.log("listServers length:" + list.length);
+        callback(null, list);
+    });
 };
+
+admin.get('/', function(req, res) {
+    listServers(function(err, data){
+        if (err) {
+            // Handle error
+        }
+
+        console.log(data.length);
+        servers = data;
+        console.log("/ servers length"+ servers.length);
+        var adminTemplate = pug.compileFile(__dirname + '/template.pug');
+        var context = { servers: servers };
+        var html = adminTemplate(context);
+        res.send(html);
+    });
+});
 
 admin.get('/addServer', function(req, res) {
     var i = 0;
