@@ -1,12 +1,12 @@
 function confim() {
-    if (confirm("Create New Server?") == true) {
+    if (confirm("Create New Server?") === true) {
         startServer();
     }
 }
 
 function hide() {
   infoBox = document.getElementById('sysInfo');
-  infoBox.className = "sysInfo"
+  infoBox.className = "sysInfo";
 }
 
 function startServer(){
@@ -39,4 +39,11 @@ function startServer(){
   console.error(xhr.statusText);
 };
   xhr.send(null);
+}
+
+function loadServer(id){
+  var content = document.getElementById('content');
+  content.src = "server?id="+id;
+  console.log("test");
+  //content.innerHTML =
 }
