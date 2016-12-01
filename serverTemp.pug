@@ -7,14 +7,27 @@ html
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
     script(src="static/script.js")
 body
-  div(class="layout")
-    div(class="pure-menu pure-menu-horizontal")
-      //a(href="#" class="pure-menu-heading pure-menu-link") Details
-      ul(class="pure-menu-list")
-        li(class="pure-menu-item tabs")
-          a(href="#" class="pure-menu-link") Server
-        li(class="pure-menu-item tabs")
-          a(href="#" class="pure-menu-link") Admin
-        li(class="pure-menu-item tabs")
-          a(href="#" class="pure-menu-link") Settings
-    div(class="Page")  
+    div(class="layout")
+        div(class="pure-menu pure-menu-horizontal")
+            //a(href="#" class="pure-menu-heading pure-menu-link") Details
+            ul(class="pure-menu-list")
+                li(class="pure-menu-item tabs")
+                    a(href="#" class="pure-menu-link" onclick="tabs(\"Server\")") Server
+                li(class="pure-menu-item tabs")
+                    a(href="#" class="pure-menu-link" onclick="tabs(\"Admin\")") Admin
+                li(class="pure-menu-item tabs")
+                    a(href="#" class="pure-menu-link" onclick="tabs(\"Settings\")") Settings
+                li(class="pure-menu-item tabs")
+                    a(href="#" class="pure-menu-link" onclick="tabs(\"Maps\")") Maps
+                li(class="pure-menu-item tabs")
+                    a(href="#" class="pure-menu-link" onclick="tabs(\"Mods\")") Mods
+        div(class="Page" id="Server" style="display:block") Server
+            div(class="title")= server.conf.name
+            div(class="discript")= server.conf.description
+            div(class="tags")
+              each tag in server.conf.tags
+                span(class="tag")= tag
+        div(class="Page" id="Admin" style="display:none") Admin
+        div(class="Page" id="Settings" style="display:none") Settings
+        div(class="Page" id="Maps" style="display:none") Maps
+        div(class="Page" id="Mods" style="display:none") Mods

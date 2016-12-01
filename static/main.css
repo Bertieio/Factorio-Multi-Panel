@@ -1,3 +1,11 @@
+.displayed{
+  display: block;
+}
+
+.hidden{
+  display: none;
+}
+
 #content {
     position: fixed;
     left: 250px;

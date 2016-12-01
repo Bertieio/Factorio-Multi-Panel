@@ -177,8 +177,38 @@ admin.get('/addServer', function(req, res) {
 });
 
 admin.get('/server', function(req, res) {
-    var adminTemplate = pug.compileFile(__dirname + '/serverTemp.pug');
-    var html = adminTemplate();
-    //console.log(req.query.id);
-    res.send(html);
+  listServer(req.query.id, function(err, data) {
+      if (err) {
+          // Handle error
+      }
+      server = data;
+      //console.log(server.conf.tags.length);
+      var adminTemplate = pug.compileFile(__dirname + '/serverTemp.pug');
+      var context = {
+          server: server
+      };
+      var html = adminTemplate(context);
+      res.send(html);
+  });
 });
+
+var listServer = function(id, callback) {
+    var item;
+    db.all("SELECT * FROM Servers WHERE serverID = "+ id +";", function(err, rows) {
+        if (err) {
+            callback(err, []);
+            return;
+        }
+
+        rows.forEach(function(e) {
+            var confi = fs.readFileSync(paths.factorioDir + "server" + e.serverID + paths.conf);
+            var conf = JSON.parse(confi);
+            item = {
+                id: e.serverID,
+                conf: conf
+            };
+
+        });
+        callback(null, item);
+    });
+};
