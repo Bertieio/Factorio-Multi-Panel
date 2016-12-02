@@ -1,9 +1,23 @@
-.displayed{
-  display: block;
+.title{
+  text-align: center;
+  font-size: 25px;
 }
 
-.hidden{
-  display: none;
+.discript{
+  text-align: center;
+  font-size: 15px;
+}
+
+.tags{
+  text-align: center;
+}
+
+.page{
+  margin: 0;
+}
+
+.SettingsForm{
+  text-align: center;
 }
 
 #content {
@@ -14,6 +28,7 @@
     padding: 0;
     width: 100%;
     height: 100%;
+    right: -500px;
 }
 
 .tabs {
